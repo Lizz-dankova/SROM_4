@@ -69,11 +69,51 @@ def reverse(poly_1, mod_poly):
 def trace(poly):
     return str(sum(map(int, poly)) % 2)
 
-mod = '10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100101001000000000000001'
+#mod = '10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100101001000000000000001'
+
+# Створюємо масив з 234 елементів, заповнений нулями
+binary_representation = ['0'] * 234
+# Встановлюємо "1" на відповідні позиції
+binary_representation[0] = '1'  # для x^233
+binary_representation[224] = '1'  # для x^9
+binary_representation[229] = '1'  # для x^4
+binary_representation[232] = '1'  # для x
+binary_representation[233] = '1'  # для константи 1
+
+# Перетворюємо масив у рядок
+mod = ''.join(binary_representation)
+
+# Виводимо результат
+#print("Binary Representation of mod:", mod)
+
+def binary_to_polynomial(binary_representation):
+    polynomial = ""
+    for i in range(len(binary_representation)):
+        if binary_representation[i] == '1':
+            if i == 0:
+                polynomial += "x^233 + "
+            elif i == 224:
+                polynomial += "x^9 + "
+            elif i == 229:
+                polynomial += "x^4 + "
+            elif i == 232:
+                polynomial += "x + "
+            elif i == 233:
+                polynomial += "1"
+    return polynomial
+
+mod_binary = mod
+mod_polynomial = binary_to_polynomial(mod_binary)
+
+print("Binary Representation of mod:", mod_binary)
+print("Polynomial Representation of mod:", mod_polynomial)
+
+#mod = polynomial_to_binary()
 
 poly1 = str(input("Enter the first polynomial: "))
 poly2 = str(input("Enter the second polynomial: "))
 poly3 = str(input("Enter the third polynomial: "))
+
 
 add_result, add_time = measure_time(addition, poly1, poly2)
 print(f'Addition:  {add_result}')
